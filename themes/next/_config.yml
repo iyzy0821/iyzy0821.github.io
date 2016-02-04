@@ -49,7 +49,7 @@ custom_logo:
 # Code Highlight theme
 # Available value: normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night
 
 
 # MathJax Support
@@ -65,8 +65,8 @@ scheme: Mist
 #  - always  expand for all pages automatically
 #  - hide    expand only when click on the sidebar toggle icon.
 #  - remove  Totally remove sidebar including sidebar toggle icon.
-sidebar: post
-#sidebar: always
+#sidebar: post
+sidebar: always
 #sidebar: hide
 #sidebar: remove
 
