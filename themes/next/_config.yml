@@ -65,9 +65,9 @@ scheme: Mist
 #  - always  expand for all pages automatically
 #  - hide    expand only when click on the sidebar toggle icon.
 #  - remove  Totally remove sidebar including sidebar toggle icon.
-#sidebar: post
+sidebar: post
 #sidebar: always
-sidebar: hide
+#sidebar: hide
 #sidebar: remove
 
 
@@ -128,5 +128,3 @@ images: images
 
 # Theme version
 version: 0.4.5.2
-
-language: zh-hans
