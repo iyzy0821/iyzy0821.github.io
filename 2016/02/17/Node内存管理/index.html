@@ -43,22 +43,25 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
-<meta name="description" content="Node使用V8的方式管理内存Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。
-V8中的对象V8中所有JS对象都是通过堆来进行分配，
-查看Node程序内存使用量1234C:\Users\NCIT&amp;gt;node">
+<meta name="description" content="《深入浅出Node.js》读书笔记
+Node使用V8的方式管理内存Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。
+V8中的对象V8中所有JS对象都是通过堆来进行分配，但是V8会限制最大的堆内存。
+查看Node">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Node内存管理">
 <meta property="og:url" content="http://blog.iyzy.net/2016/02/17/Node内存管理/index.html">
 <meta property="og:site_name" content="Tomorrow">
-<meta property="og:description" content="Node使用V8的方式管理内存Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。
-V8中的对象V8中所有JS对象都是通过堆来进行分配，
-查看Node程序内存使用量1234C:\Users\NCIT&amp;gt;node">
-<meta property="og:updated_time" content="2016-02-17T09:32:23.197Z">
+<meta property="og:description" content="《深入浅出Node.js》读书笔记
+Node使用V8的方式管理内存Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。
+V8中的对象V8中所有JS对象都是通过堆来进行分配，但是V8会限制最大的堆内存。
+查看Node">
+<meta property="og:updated_time" content="2016-02-17T11:13:02.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node内存管理">
-<meta name="twitter:description" content="Node使用V8的方式管理内存Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。
-V8中的对象V8中所有JS对象都是通过堆来进行分配，
-查看Node程序内存使用量1234C:\Users\NCIT&amp;gt;node">
+<meta name="twitter:description" content="《深入浅出Node.js》读书笔记
+Node使用V8的方式管理内存Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。
+V8中的对象V8中所有JS对象都是通过堆来进行分配，但是V8会限制最大的堆内存。
+查看Node">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -218,9 +221,20 @@ V8中的对象V8中所有JS对象都是通过堆来进行分配，
       
 
       
-        <span itemprop="articleBody"><h2 id="Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58"><a href="#Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58" class="headerlink" title="Node使用V8的方式管理内存"></a>Node使用V8的方式管理内存</h2><p>Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。</p>
-<h2 id="V8_u4E2D_u7684_u5BF9_u8C61"><a href="#V8_u4E2D_u7684_u5BF9_u8C61" class="headerlink" title="V8中的对象"></a>V8中的对象</h2><p>V8中所有JS对象都是通过堆来进行分配，</p>
-<h4 id="u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF"><a href="#u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF" class="headerlink" title="查看Node程序内存使用量"></a>查看Node程序内存使用量</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">C</span>:\<span class="tag">Users</span>\<span class="tag">NCIT</span>&gt;<span class="tag">node</span></span><br><span class="line">&gt; <span class="tag">process</span><span class="class">.memoryUsage</span>()</span><br><span class="line"><span class="rules">&#123; <span class="rule"><span class="attribute">rss</span>:<span class="value"> <span class="number">26599424</span>, heapTotal: <span class="number">7442512</span>, heapUsed: <span class="number">4500616</span> </span></span></span>&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></span>
+        <span itemprop="articleBody"><p><em>《深入浅出Node.js》读书笔记</em></p>
+<h2 id="Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58"><a href="#Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58" class="headerlink" title="Node使用V8的方式管理内存"></a>Node使用V8的方式管理内存</h2><p>Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。</p>
+<h2 id="V8_u4E2D_u7684_u5BF9_u8C61"><a href="#V8_u4E2D_u7684_u5BF9_u8C61" class="headerlink" title="V8中的对象"></a>V8中的对象</h2><p>V8中所有JS对象都是通过堆来进行分配，但是V8会限制最大的堆内存。</p>
+<h4 id="u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF"><a href="#u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF" class="headerlink" title="查看Node程序内存使用量"></a>查看Node程序内存使用量</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">C</span>:\<span class="tag">Users</span>\<span class="tag">NCIT</span>&gt;<span class="tag">node</span></span><br><span class="line">&gt; <span class="tag">process</span><span class="class">.memoryUsage</span>()</span><br><span class="line"><span class="rules">&#123; <span class="rule"><span class="attribute">rss</span>:<span class="value"> <span class="number">26599424</span>, heapTotal: <span class="number">7442512</span>, heapUsed: <span class="number">4500616</span> </span></span></span>&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>rss：<br>heapTotal：以申请到的堆内存<br>heapUsed：当前使用量  </p>
+<h4 id="u5927_u5185_u5B58_u5783_u573E_u56DE_u6536_u65F6_u95F4_u82B1_u9500_u5927"><a href="#u5927_u5185_u5B58_u5783_u573E_u56DE_u6536_u65F6_u95F4_u82B1_u9500_u5927" class="headerlink" title="大内存垃圾回收时间花销大"></a>大内存垃圾回收时间花销大</h4><p>V8最初为浏览器设计，不大可能遇到使用大量内存的场景。  </p>
+<p>V8在1.5GB的堆内存上进行垃圾回收，会消耗50毫秒以上，做一次非增量式的垃圾回收甚至要1秒以上。垃圾回收时会造成JS线程暂停，在这样的时间花销下，应用的性能和响应能力会直线下降。</p>
+<h4 id="u4F7F_u7528_u66F4_u591A_u7684_u5185_u5B58"><a href="#u4F7F_u7528_u66F4_u591A_u7684_u5185_u5B58" class="headerlink" title="使用更多的内存"></a>使用更多的内存</h4><p>Node在启动时传递“–max-old-space-size”和“–max-new-space-size”来调整内存限制。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\NCIT&gt;<span class="keyword">node</span><span class="identifier"> </span><span class="title">--max-old-space-size</span>=<span class="number">1700</span> //单位MB</span><br><span class="line">C:\Users\NCIT&gt;<span class="keyword">node</span><span class="identifier"> </span><span class="title">--max-new-space-size</span>=<span class="number">1024</span> //单位KB</span><br></pre></td></tr></table></figure>
+<p><strong>–max-new-space-size在我使用的版本4.2.2中不存在了，改成了–max_semi_space_size，单位：MB</strong><br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\NCIT&gt;<span class="keyword">node</span><span class="identifier"> </span><span class="title">--max-new-space-size</span>=<span class="number">1024</span></span><br><span class="line"><span class="keyword">node</span><span class="identifier"></span><span class="title">: bad</span> option: --<span class="variable">max-new-space-size=</span><span class="number">1024</span></span><br></pre></td></tr></table></figure></p>
+<p>查看Node的V8参数<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">node</span><span class="identifier"> </span><span class="title">--v8-options</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="V8_u7684_u5783_u573E_u56DE_u6536_u673A_u5236"><a href="#V8_u7684_u5783_u573E_u56DE_u6536_u673A_u5236" class="headerlink" title="V8的垃圾回收机制"></a>V8的垃圾回收机制</h2><p>V8的垃圾回收机制主要基于分代式回收机制。</p>
+<h4 id="V8_u7684_u5185_u5B58_u5206_u4EE3"><a href="#V8_u7684_u5185_u5B58_u5206_u4EE3" class="headerlink" title="V8的内存分代"></a>V8的内存分代</h4><p>V8中将内存分为新生代和老生代两代，</p>
+</span>
       
     </div>
 
@@ -352,7 +366,7 @@ V8中的对象V8中所有JS对象都是通过堆来进行分配，
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58"><span class="nav-number">1.</span> <span class="nav-text">Node使用V8的方式管理内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V8_u4E2D_u7684_u5BF9_u8C61"><span class="nav-number">2.</span> <span class="nav-text">V8中的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF"><span class="nav-number">2.0.1.</span> <span class="nav-text">查看Node程序内存使用量</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58"><span class="nav-number">1.</span> <span class="nav-text">Node使用V8的方式管理内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V8_u4E2D_u7684_u5BF9_u8C61"><span class="nav-number">2.</span> <span class="nav-text">V8中的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF"><span class="nav-number">2.0.1.</span> <span class="nav-text">查看Node程序内存使用量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u5927_u5185_u5B58_u5783_u573E_u56DE_u6536_u65F6_u95F4_u82B1_u9500_u5927"><span class="nav-number">2.0.2.</span> <span class="nav-text">大内存垃圾回收时间花销大</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u4F7F_u7528_u66F4_u591A_u7684_u5185_u5B58"><span class="nav-number">2.0.3.</span> <span class="nav-text">使用更多的内存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V8_u7684_u5783_u573E_u56DE_u6536_u673A_u5236"><span class="nav-number">3.</span> <span class="nav-text">V8的垃圾回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#V8_u7684_u5185_u5B58_u5206_u4EE3"><span class="nav-number">3.0.1.</span> <span class="nav-text">V8的内存分代</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
