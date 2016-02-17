@@ -180,6 +180,83 @@
             
             
               
+                <a class="post-title-link" href="/2016/02/17/Node内存管理/" itemprop="url">
+                  Node内存管理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-02-17T17:16:12+08:00" content="2016-02-17">
+              2016-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58"><a href="#Node_u4F7F_u7528V8_u7684_u65B9_u5F0F_u7BA1_u7406_u5185_u5B58" class="headerlink" title="Node使用V8的方式管理内存"></a>Node使用V8的方式管理内存</h2><p>Node中通过JS使用内存时只能使用部分内存（64位系统约为1.4GB，32位系统约为0.7GB），限制了Node无法直接操作大内存对象。主要原因是Node基于V8构建，在Node中使用JS对象基本上都是通过V8自己的方式进行分配和管理。</p>
+<h2 id="V8_u4E2D_u7684_u5BF9_u8C61"><a href="#V8_u4E2D_u7684_u5BF9_u8C61" class="headerlink" title="V8中的对象"></a>V8中的对象</h2><p>V8中所有JS对象都是通过堆来进行分配，</p>
+<h4 id="u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF"><a href="#u67E5_u770BNode_u7A0B_u5E8F_u5185_u5B58_u4F7F_u7528_u91CF" class="headerlink" title="查看Node程序内存使用量"></a>查看Node程序内存使用量</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">C</span>:\<span class="tag">Users</span>\<span class="tag">NCIT</span>&gt;<span class="tag">node</span></span><br><span class="line">&gt; <span class="tag">process</span><span class="class">.memoryUsage</span>()</span><br><span class="line"><span class="rules">&#123; <span class="rule"><span class="attribute">rss</span>:<span class="value"> <span class="number">26599424</span>, heapTotal: <span class="number">7442512</span>, heapUsed: <span class="number">4500616</span> </span></span></span>&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2016/02/04/hello-world/" itemprop="url">
                   Hello World
                 </a>
@@ -286,7 +363,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -300,7 +377,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
