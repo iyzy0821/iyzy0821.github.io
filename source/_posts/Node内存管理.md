@@ -33,13 +33,13 @@ V8在1.5GB的堆内存上进行垃圾回收，会消耗50毫秒以上，做一�
 
 #### 使用更多的内存 ####
 
-Node在启动时传递“--max-old-space-size”和“--max-new-space-size”来调整内存限制，单位：MB。
+Node在启动时传递“--max-old-space-size”和“--max-new-space-size”来调整内存限制。
 
 ```
-C:\Users\NCIT>node --max-old-space-size=1700
-C:\Users\NCIT>node --max-new-space-size=1024
+C:\Users\NCIT>node --max-old-space-size=1700 //单位MB
+C:\Users\NCIT>node --max-new-space-size=1024 //单位KB
 ```
-**--max-new-space-size在我使用的版本中不存在了**
+**--max-new-space-size在我使用的版本4.2.2中不存在了，改成了--max_semi_space_size，单位：MB**
 ```
 C:\Users\NCIT>node --max-new-space-size=1024
 node: bad option: --max-new-space-size=1024
