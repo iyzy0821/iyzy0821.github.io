@@ -39,7 +39,7 @@ Node在启动时传递“--max-old-space-size”和“--max-new-space-size”来
 C:\Users\NCIT>node --max-old-space-size=1700 //单位MB
 C:\Users\NCIT>node --max-new-space-size=1024 //单位KB
 ```
-**--max-new-space-size在我使用的版本4.2.2中不存在了，改成了--max_semi_space_size，单位：MB**
+**--max-new-space-size在我使用的版本4.2.2中不存在了，V8已经改成了参数--max_semi_space_size，单位：MB**
 ```
 C:\Users\NCIT>node --max-new-space-size=1024
 node: bad option: --max-new-space-size=1024
