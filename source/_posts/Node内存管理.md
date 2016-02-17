@@ -40,6 +40,7 @@ C:\Users\NCIT>node --max-old-space-size=1700 //单位MB
 C:\Users\NCIT>node --max-new-space-size=1024 //单位KB
 ```
 **--max-new-space-size在我使用的版本4.2.2中不存在了，V8已经改成了参数--max_semi_space_size，单位：MB**
+[参考链接](https://codereview.chromium.org/271843005/)
 ```
 C:\Users\NCIT>node --max-new-space-size=1024
 node: bad option: --max-new-space-size=1024
