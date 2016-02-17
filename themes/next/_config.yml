@@ -124,7 +124,8 @@ fancybox: true
 vendors: vendors
 css: css
 js: js
-images: images
+#images: images
+images: http://7xqr8x.com1.z0.glb.clouddn.com/blog_static/images
 
 # Theme version
 version: 0.4.5.2
